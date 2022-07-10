@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyp.seckill.mapper.SkGoodsSeckillMapper">
+
+    <!-- 通用设置 -->
+    <!-- 通用查询列 -->
+    <sql id="Base_Column_List">
+        id, goods_id, seckill_price, stock_count, start_date, end_date, version
+    </sql>
+
+    <!-- 通用条件列 -->
+    <sql id="SkGoodsSeckillByCondition">
+            <if test="goodsId!=null and goodsId!=''">
+                AND goods_id = #{goodsId}
+            </if>
+            <if test="seckillPrice!=null and seckillPrice!=''">
+                AND seckill_price = #{seckillPrice}
+            </if>
+            <if test="stockCount!=null and stockCount!=''">
+                AND stock_count = #{stockCount}
+            </if>
+            <if test="startDate!=null and startDate!=''">
+                AND start_date = #{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                AND end_date = #{endDate}
+            </if>
+            <if test="version!=null and version!=''">
+                AND version = #{version}
+            </if>
+    </sql>
+
+    <!-- 通用设置列 -->
+    <sql id="SkGoodsSeckillSetColumns">
+            <if test="goodsId!=null and goodsId!=''">
+                goods_id = #{goodsId},
+            </if>
+            <if test="seckillPrice!=null and seckillPrice!=''">
+                seckill_price = #{seckillPrice},
+            </if>
+            <if test="stockCount!=null and stockCount!=''">
+                stock_count = #{stockCount},
+            </if>
+            <if test="startDate!=null and startDate!=''">
+                start_date = #{startDate},
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                end_date = #{endDate},
+            </if>
+            <if test="version!=null and version!=''">
+                version = #{version},
+            </if>
+    </sql>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SkGoodsSeckillMap" type="com.lyp.seckill.pojo.SkGoodsSeckill">
+            <id column="id" property="id"/>
+            <result column="goods_id" property="goodsId"/>
+            <result column="seckill_price" property="seckillPrice"/>
+            <result column="stock_count" property="stockCount"/>
+            <result column="start_date" property="startDate"/>
+            <result column="end_date" property="endDate"/>
+            <result column="version" property="version"/>
+    </resultMap>
+
+    <!-- 查询表sk_goods_seckill所有信息 -->
+    <select id="findAllSkGoodsSeckill" resultMap="SkGoodsSeckillMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sk_goods_seckill
+    </select>
+
+    <!-- 根据主键id查询表sk_goods_seckill信息 -->
+    <select id="findSkGoodsSeckillByid" resultMap="SkGoodsSeckillMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sk_goods_seckill
+        WHERE id=#{id}
+    </select>
+
+    <!-- 根据条件查询表sk_goods_seckill信息 -->
+    <select id="findSkGoodsSeckillByCondition" resultMap="SkGoodsSeckillMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sk_goods_seckill
+        WHERE 1=1
+        <include refid="SkGoodsSeckillByCondition" />
+    </select>
+
+    <!-- 根据主键id删除表sk_goods_seckill信息 -->
+    <delete id="deleteSkGoodsSeckillByid">
+        DELETE FROM
+        sk_goods_seckill
+        WHERE id=#{id}
+    </delete>
+
+    <!-- 根据主键id更新表sk_goods_seckill信息 -->
+    <update id="updateSkGoodsSeckillByid" parameterType="com.lyp.seckill.pojo.SkGoodsSeckill">
+        UPDATE sk_goods_seckill
+        <set>
+            <include refid="SkGoodsSeckillSetColumns"/>
+        </set>
+        WHERE
+        id=#{id}
+    </update>
+
+    <!-- 新增表sk_goods_seckill信息 -->
+    <insert id="addSkGoodsSeckill">
+        INSERT INTO sk_goods_seckill (
+            id
+            ,goods_id
+            ,seckill_price
+            ,stock_count
+            ,start_date
+            ,end_date
+            ,version
+        ) VALUES (
+            #{id}
+            ,#{goodsId}
+            ,#{seckillPrice}
+            ,#{stockCount}
+            ,#{startDate}
+            ,#{endDate}
+            ,#{version}
+        )
+    </insert>
+</mapper>

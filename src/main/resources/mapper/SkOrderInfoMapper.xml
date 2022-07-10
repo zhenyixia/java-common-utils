@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyp.seckill.mapper.SkOrderInfoMapper">
+
+    <!-- 通用设置 -->
+    <!-- 通用查询列 -->
+    <sql id="Base_Column_List">
+        id, user_id, goods_id, delivery_addr_id, goods_name, goods_count, goods_price, order_channel, status, create_date, pay_date
+    </sql>
+
+    <!-- 通用条件列 -->
+    <sql id="SkOrderInfoByCondition">
+            <if test="userId!=null and userId!=''">
+                AND user_id = #{userId}
+            </if>
+            <if test="goodsId!=null and goodsId!=''">
+                AND goods_id = #{goodsId}
+            </if>
+            <if test="deliveryAddrId!=null and deliveryAddrId!=''">
+                AND delivery_addr_id = #{deliveryAddrId}
+            </if>
+            <if test="goodsName!=null and goodsName!=''">
+                AND goods_name = #{goodsName}
+            </if>
+            <if test="goodsCount!=null and goodsCount!=''">
+                AND goods_count = #{goodsCount}
+            </if>
+            <if test="goodsPrice!=null and goodsPrice!=''">
+                AND goods_price = #{goodsPrice}
+            </if>
+            <if test="orderChannel!=null and orderChannel!=''">
+                AND order_channel = #{orderChannel}
+            </if>
+            <if test="status!=null and status!=''">
+                AND status = #{status}
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                AND create_date = #{createDate}
+            </if>
+            <if test="payDate!=null and payDate!=''">
+                AND pay_date = #{payDate}
+            </if>
+    </sql>
+
+    <!-- 通用设置列 -->
+    <sql id="SkOrderInfoSetColumns">
+            <if test="userId!=null and userId!=''">
+                user_id = #{userId},
+            </if>
+            <if test="goodsId!=null and goodsId!=''">
+                goods_id = #{goodsId},
+            </if>
+            <if test="deliveryAddrId!=null and deliveryAddrId!=''">
+                delivery_addr_id = #{deliveryAddrId},
+            </if>
+            <if test="goodsName!=null and goodsName!=''">
+                goods_name = #{goodsName},
+            </if>
+            <if test="goodsCount!=null and goodsCount!=''">
+                goods_count = #{goodsCount},
+            </if>
+            <if test="goodsPrice!=null and goodsPrice!=''">
+                goods_price = #{goodsPrice},
+            </if>
+            <if test="orderChannel!=null and orderChannel!=''">
+                order_channel = #{orderChannel},
+            </if>
+            <if test="status!=null and status!=''">
+                status = #{status},
+            </if>
+            <if test="createDate!=null and createDate!=''">
+                create_date = #{createDate},
+            </if>
+            <if test="payDate!=null and payDate!=''">
+                pay_date = #{payDate},
+            </if>
+    </sql>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SkOrderInfoMap" type="com.lyp.seckill.pojo.SkOrderInfo">
+            <id column="id" property="id"/>
+            <result column="user_id" property="userId"/>
+            <result column="goods_id" property="goodsId"/>
+            <result column="delivery_addr_id" property="deliveryAddrId"/>
+            <result column="goods_name" property="goodsName"/>
+            <result column="goods_count" property="goodsCount"/>
+            <result column="goods_price" property="goodsPrice"/>
+            <result column="order_channel" property="orderChannel"/>
+            <result column="status" property="status"/>
+            <result column="create_date" property="createDate"/>
+            <result column="pay_date" property="payDate"/>
+    </resultMap>
+
+    <!-- 查询表sk_order_info所有信息 -->
+    <select id="findAllSkOrderInfo" resultMap="SkOrderInfoMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sk_order_info
+    </select>
+
+    <!-- 根据主键id查询表sk_order_info信息 -->
+    <select id="findSkOrderInfoByid" resultMap="SkOrderInfoMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sk_order_info
+        WHERE id=#{id}
+    </select>
+
+    <!-- 根据条件查询表sk_order_info信息 -->
+    <select id="findSkOrderInfoByCondition" resultMap="SkOrderInfoMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sk_order_info
+        WHERE 1=1
+        <include refid="SkOrderInfoByCondition" />
+    </select>
+
+    <!-- 根据主键id删除表sk_order_info信息 -->
+    <delete id="deleteSkOrderInfoByid">
+        DELETE FROM
+        sk_order_info
+        WHERE id=#{id}
+    </delete>
+
+    <!-- 根据主键id更新表sk_order_info信息 -->
+    <update id="updateSkOrderInfoByid" parameterType="com.lyp.seckill.pojo.SkOrderInfo">
+        UPDATE sk_order_info
+        <set>
+            <include refid="SkOrderInfoSetColumns"/>
+        </set>
+        WHERE
+        id=#{id}
+    </update>
+
+    <!-- 新增表sk_order_info信息 -->
+    <insert id="addSkOrderInfo">
+        INSERT INTO sk_order_info (
+            id
+            ,user_id
+            ,goods_id
+            ,delivery_addr_id
+            ,goods_name
+            ,goods_count
+            ,goods_price
+            ,order_channel
+            ,status
+            ,create_date
+            ,pay_date
+        ) VALUES (
+            #{id}
+            ,#{userId}
+            ,#{goodsId}
+            ,#{deliveryAddrId}
+            ,#{goodsName}
+            ,#{goodsCount}
+            ,#{goodsPrice}
+            ,#{orderChannel}
+            ,#{status}
+            ,#{createDate}
+            ,#{payDate}
+        )
+    </insert>
+</mapper>

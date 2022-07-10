@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyp.seckill.mapper.SkUserMapper">
+
+    <!-- 通用设置 -->
+    <!-- 通用查询列 -->
+    <sql id="Base_Column_List">
+        id, nickname, password, salt, head, register_date, last_login_date, login_count
+    </sql>
+
+    <!-- 通用条件列 -->
+    <sql id="SkUserByCondition">
+            <if test="nickname!=null and nickname!=''">
+                AND nickname = #{nickname}
+            </if>
+            <if test="password!=null and password!=''">
+                AND password = #{password}
+            </if>
+            <if test="salt!=null and salt!=''">
+                AND salt = #{salt}
+            </if>
+            <if test="head!=null and head!=''">
+                AND head = #{head}
+            </if>
+            <if test="registerDate!=null and registerDate!=''">
+                AND register_date = #{registerDate}
+            </if>
+            <if test="lastLoginDate!=null and lastLoginDate!=''">
+                AND last_login_date = #{lastLoginDate}
+            </if>
+            <if test="loginCount!=null and loginCount!=''">
+                AND login_count = #{loginCount}
+            </if>
+    </sql>
+
+    <!-- 通用设置列 -->
+    <sql id="SkUserSetColumns">
+            <if test="nickname!=null and nickname!=''">
+                nickname = #{nickname},
+            </if>
+            <if test="password!=null and password!=''">
+                password = #{password},
+            </if>
+            <if test="salt!=null and salt!=''">
+                salt = #{salt},
+            </if>
+            <if test="head!=null and head!=''">
+                head = #{head},
+            </if>
+            <if test="registerDate!=null and registerDate!=''">
+                register_date = #{registerDate},
+            </if>
+            <if test="lastLoginDate!=null and lastLoginDate!=''">
+                last_login_date = #{lastLoginDate},
+            </if>
+            <if test="loginCount!=null and loginCount!=''">
+                login_count = #{loginCount},
+            </if>
+    </sql>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SkUserMap" type="com.lyp.seckill.pojo.SkUser">
+            <id column="id" property="id"/>
+            <result column="nickname" property="nickname"/>
+            <result column="password" property="password"/>
+            <result column="salt" property="salt"/>
+            <result column="head" property="head"/>
+            <result column="register_date" property="registerDate"/>
+            <result column="last_login_date" property="lastLoginDate"/>
+            <result column="login_count" property="loginCount"/>
+    </resultMap>
+
+    <!-- 查询表sk_user所有信息 -->
+    <select id="findAllSkUser" resultMap="SkUserMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sk_user
+    </select>
+
+    <!-- 根据主键id查询表sk_user信息 -->
+    <select id="findSkUserByid" resultMap="SkUserMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sk_user
+        WHERE id=#{id}
+    </select>
+
+    <!-- 根据条件查询表sk_user信息 -->
+    <select id="findSkUserByCondition" resultMap="SkUserMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sk_user
+        WHERE 1=1
+        <include refid="SkUserByCondition" />
+    </select>
+
+    <!-- 根据主键id删除表sk_user信息 -->
+    <delete id="deleteSkUserByid">
+        DELETE FROM
+        sk_user
+        WHERE id=#{id}
+    </delete>
+
+    <!-- 根据主键id更新表sk_user信息 -->
+    <update id="updateSkUserByid" parameterType="com.lyp.seckill.pojo.SkUser">
+        UPDATE sk_user
+        <set>
+            <include refid="SkUserSetColumns"/>
+        </set>
+        WHERE
+        id=#{id}
+    </update>
+
+    <!-- 新增表sk_user信息 -->
+    <insert id="addSkUser">
+        INSERT INTO sk_user (
+            id
+            ,nickname
+            ,password
+            ,salt
+            ,head
+            ,register_date
+            ,last_login_date
+            ,login_count
+        ) VALUES (
+            #{id}
+            ,#{nickname}
+            ,#{password}
+            ,#{salt}
+            ,#{head}
+            ,#{registerDate}
+            ,#{lastLoginDate}
+            ,#{loginCount}
+        )
+    </insert>
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyp.seckill.mapper.SkGoodsMapper">
+
+    <!-- 通用设置 -->
+    <!-- 通用查询列 -->
+    <sql id="Base_Column_List">
+        id, goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock
+    </sql>
+
+    <!-- 通用条件列 -->
+    <sql id="SkGoodsByCondition">
+            <if test="goodsName!=null and goodsName!=''">
+                AND goods_name = #{goodsName}
+            </if>
+            <if test="goodsTitle!=null and goodsTitle!=''">
+                AND goods_title = #{goodsTitle}
+            </if>
+            <if test="goodsImg!=null and goodsImg!=''">
+                AND goods_img = #{goodsImg}
+            </if>
+            <if test="goodsDetail!=null and goodsDetail!=''">
+                AND goods_detail = #{goodsDetail}
+            </if>
+            <if test="goodsPrice!=null and goodsPrice!=''">
+                AND goods_price = #{goodsPrice}
+            </if>
+            <if test="goodsStock!=null and goodsStock!=''">
+                AND goods_stock = #{goodsStock}
+            </if>
+    </sql>
+
+    <!-- 通用设置列 -->
+    <sql id="SkGoodsSetColumns">
+            <if test="goodsName!=null and goodsName!=''">
+                goods_name = #{goodsName},
+            </if>
+            <if test="goodsTitle!=null and goodsTitle!=''">
+                goods_title = #{goodsTitle},
+            </if>
+            <if test="goodsImg!=null and goodsImg!=''">
+                goods_img = #{goodsImg},
+            </if>
+            <if test="goodsDetail!=null and goodsDetail!=''">
+                goods_detail = #{goodsDetail},
+            </if>
+            <if test="goodsPrice!=null and goodsPrice!=''">
+                goods_price = #{goodsPrice},
+            </if>
+            <if test="goodsStock!=null and goodsStock!=''">
+                goods_stock = #{goodsStock},
+            </if>
+    </sql>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SkGoodsMap" type="com.lyp.seckill.pojo.SkGoods">
+            <id column="id" property="id"/>
+            <result column="goods_name" property="goodsName"/>
+            <result column="goods_title" property="goodsTitle"/>
+            <result column="goods_img" property="goodsImg"/>
+            <result column="goods_detail" property="goodsDetail"/>
+            <result column="goods_price" property="goodsPrice"/>
+            <result column="goods_stock" property="goodsStock"/>
+    </resultMap>
+
+    <!-- 查询表sk_goods所有信息 -->
+    <select id="findAllSkGoods" resultMap="SkGoodsMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sk_goods
+    </select>
+
+    <!-- 根据主键id查询表sk_goods信息 -->
+    <select id="findSkGoodsByid" resultMap="SkGoodsMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sk_goods
+        WHERE id=#{id}
+    </select>
+
+    <!-- 根据条件查询表sk_goods信息 -->
+    <select id="findSkGoodsByCondition" resultMap="SkGoodsMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sk_goods
+        WHERE 1=1
+        <include refid="SkGoodsByCondition" />
+    </select>
+
+    <!-- 根据主键id删除表sk_goods信息 -->
+    <delete id="deleteSkGoodsByid">
+        DELETE FROM
+        sk_goods
+        WHERE id=#{id}
+    </delete>
+
+    <!-- 根据主键id更新表sk_goods信息 -->
+    <update id="updateSkGoodsByid" parameterType="com.lyp.seckill.pojo.SkGoods">
+        UPDATE sk_goods
+        <set>
+            <include refid="SkGoodsSetColumns"/>
+        </set>
+        WHERE
+        id=#{id}
+    </update>
+
+    <!-- 新增表sk_goods信息 -->
+    <insert id="addSkGoods">
+        INSERT INTO sk_goods (
+            id
+            ,goods_name
+            ,goods_title
+            ,goods_img
+            ,goods_detail
+            ,goods_price
+            ,goods_stock
+        ) VALUES (
+            #{id}
+            ,#{goodsName}
+            ,#{goodsTitle}
+            ,#{goodsImg}
+            ,#{goodsDetail}
+            ,#{goodsPrice}
+            ,#{goodsStock}
+        )
+    </insert>
+</mapper>
